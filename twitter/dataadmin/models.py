@@ -12,6 +12,7 @@ from tweetsmodel import TweetsManager
 
 class Tweets(models.Model):
     id = models.BigIntegerField(primary_key=True)
+    userid = models.BigIntegerField()
     text = models.CharField(max_length=450)
     screen_name = models.CharField(max_length=765)
     followers_count = models.IntegerField()
@@ -23,6 +24,7 @@ class Tweets(models.Model):
         
 class Tweetsiphone(models.Model):
     id = models.BigIntegerField(primary_key=True)
+    models.BigIntegerField()
     text = models.CharField(max_length=450)
     screen_name = models.CharField(max_length=765)
     followers_count = models.IntegerField()
