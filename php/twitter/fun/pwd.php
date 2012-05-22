@@ -1,5 +1,5 @@
 <?php
 
-	$pwd = 'menyealay';
+	$pwd = 'bandung';
 
 ?>

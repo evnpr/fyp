@@ -1,5 +1,5 @@
 <?php
-
+	include "tablename.php";
 	set_time_limit(0);
 	include_once('config.php');
 	$opts = array(
@@ -26,7 +26,7 @@
 				$screen_name = mysql_real_escape_string($tweet->{'user'}->{'screen_name'});
 				$followers_count = mysql_real_escape_string($tweet->{'user'}->{'followers_count'});
 				//We store the new post in the database, to be able to read it later
-				$ok = mysql_query("INSERT INTO tweetsiphone (id ,text ,screen_name ,followers_count, created_at) VALUES ('$id', '$text', '$screen_name', '$followers_count', NOW())");
+				$ok = mysql_query("INSERT INTO $tablename (userid ,text ,screen_name ,followers_count, created_at) VALUES ('$id', '$text', '$screen_name', '$followers_count', NOW())");
 				if (!$ok) {echo "Mysql Error: ".mysql_error();}
 				flush();
 			}
