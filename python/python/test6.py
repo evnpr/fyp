@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import MySQLdb
+import math
 
 # Open database connection
 db = MySQLdb.connect("localhost","root","","twitter_alerts" )
@@ -40,23 +41,117 @@ for row in results:
    listID.append(('id'+str(screenname), childid))
    listNumFol.append(('numfol'+str(screenname), numberOfFollower))
    getNumFolID.append((childid, numberOfFollower))
-   weight.append((childid, 0))
+   if(numberOfFollower!=0):
+      initweight = math.log10(numberOfFollower)
+   else:
+      initweight = 1
+   weight.append((childid, initweight))
+   getParentID.append((childid, 01))
+   twit.append(childid)
    
 #lists of dict 1   
 getID = dict(listID)
 getNumFol = dict(listNumFol)
 getNumFolID = dict(getNumFolID)
+weight = dict(weight)
+getParentID = dict(getParentID)
+getParentIDdef = dict(getParentID)
+
+
+twit = set(twit)
 
 
 
-sql = "SELECT * FROM tweets WHERE text LIKE '%RT%'"
+#
+#for row in results:
+#   #child data
+#   childid = row[1]
+#   text = row[2]
+#   screenname = row[3]
+#   numberOfFollower = row[4]
+#   
+#   
+#   #retrieve parent data
+#   try:
+#      if text.split("RT @")[0]=='':
+#         continue
+#      after = text.split("RT @")[1]
+#      parentname = after.split(" ")[0].split(":")[0]
+#   except IndexError:
+#      continue
+#   
+#   try:
+#      parentid = getID['id'+parentname]
+#      getParentID[childid] =  parentid
+#   except:
+#      continue
+#   
+#
+#
+#
+#def getRoot(id, i):
+#   try:
+#      if id!=i:
+#         weight[id] = weight[id] + math.log10(getNumFolID[i]*0.5)
+#      if id!=getParentID[id] and id!=getParentID[getParentID[id]]:
+#         return getRoot(getParentID[id], i)
+#   except:
+#      return id
+#
+#for itwit in twit:
+#   getRoot(itwit, itwit)
+#
+#
+#
+#
+##lists of lists
+#listID = []
+#listNumFol = []
+#getParentID = getParentIDdef
+#for row in results:
+#   #child data
+#   childid = row[1]
+#   text = row[2]
+#   screenname = row[3]
+#   numberOfFollower = row[4]
+#   
+#   
+#   #retrieve parent data
+#   try:
+#      if text.split("RT @")[0]!='':
+#         continue
+#      after = text.split("RT @")[1]
+#      parentname = after.split(" ")[0].split(":")[0]
+#   except IndexError:
+#      continue
+#   
+#   try:
+#      parentid = getID['id'+parentname]
+#      getParentID[childid] = parentid
+#   except:
+#      continue
+#   
+#
+#
+#
+#def getRoot2(id, i):
+#   try:
+#      if id!=i:
+#         weight[id] = weight[id] + math.log10(getNumFolID[i]*0.3)
+#      if id!=getParentID[id] and id!=getParentID[getParentID[id]]:
+#         return getRoot2(getParentID[id], i)
+#   except:
+#      return id
+#   
+#for itwit in twit:
+#   getRoot2(itwit, itwit)
+#
 
-   # Execute the SQL command
-cursor.execute(sql)
-   # Fetch all the rows in a list of lists.
-results = cursor.fetchall()
 
-
+#lists of lists
+listID = []
+listNumFol = []
+getParentID = getParentIDdef
 for row in results:
    #child data
    childid = row[1]
@@ -67,45 +162,42 @@ for row in results:
    
    #retrieve parent data
    try:
-      after = text.split("RT @")[1]
-      parentname = after.split(" ")[0].split(":")[0]
+      if text.split("@")[0]!='':
+         continue
+      after = text.split("@")[1]
+      parentname = after.split(" ")[0]
    except IndexError:
       continue
    
    try:
       parentid = getID['id'+parentname]
-      getParentID.append((childid, parentid))
-      parentnumberoffollower = getNumFol['numfol'+parentname]
-      childnumberoffollower = getNumFol['numfol'+screenname]
+      getParentID[childid] = parentid 
    except:
       continue
    
-   n = parentnumberoffollower
-   cn = childnumberoffollower
-   twit.append((parentid, childid, cn))
 
-
-#lists of dict 2
-getParentID = dict(getParentID)
-weight = dict(weight)
-
-
-
-def getRoot(id, i):
+def getRoot3(id, i):
    try:
-      weight[id] = weight[id] + getNumFolID[i]
-      return getRoot(getParentID[id], i)
+      if id!=i:
+         weight[id] = weight[id] + math.log10(getNumFolID[i]*0.2)
+      if id!=getParentID[id] and id!=getParentID[getParentID[id]]:
+         return getRoot3(getParentID[id], i)
    except:
       return id
-
-
-
+   
 for itwit in twit:
-   getRoot(itwit[1], itwit[1])
+   getRoot3(itwit, itwit)
+
+
+
+
+
+
       
 for itwit in twit:
-   print itwit[0],
-   print weight[itwit[0]]
+   print itwit,
+   print weight[itwit],
+   print getNumFolID[itwit]
 
 
 # disconnect from server
