@@ -1,6 +1,6 @@
 <?php
 $username = "evanpurnama"; // Your twitter username.
-$limit = "15"; // Number of tweets to pull in.
+$limit = "1000"; // Number of tweets to pull in.
 
 /* These prefixes and suffixes will display before and after the entire block of tweets. */
 $prefix = ""; // Prefix - some text you want displayed before all your tweets.
