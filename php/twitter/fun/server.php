@@ -1,8 +1,7 @@
 <?php
 	include "tablename.php";
 	//We are going to need a database connection:
-	$db = mysql_connect('localhost', 'root', '');
-	mysql_select_db('twitter_alerts', $db);
+	include "db.php";
 	//Now, two possibilities: if we don't have a start parameter, we print the last ten $tablename.
 	//Otherwise, we print all the $tablename with IDs bigger than start, if any
 	$start = mysql_real_escape_string($_GET['start']);

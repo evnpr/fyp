@@ -3,13 +3,13 @@ import MySQLdb
 import math
 
 # Open database connection
-db = MySQLdb.connect("localhost","root","","twitter_alerts" )
+db = MySQLdb.connect("localhost","root","abc123","twitter_alerts" )
 
 # prepare a cursor object using cursor() method
 cursor = db.cursor()
 
 # Prepare SQL query to INSERT a record into the database.
-sql = "SELECT * FROM tweetstest"
+sql = "SELECT * FROM tweetsandroid"
 
    # Execute the SQL command
 cursor.execute(sql)
@@ -32,7 +32,7 @@ getNumFolID = []
 
 for row in results:
    #child data
-   childid = row[0]
+   childid = row[1]
    text = row[2]
    screenname = row[3]
    numberOfFollower = row[4]
@@ -65,7 +65,7 @@ twit = set(twit)
 
 for row in results:
   #child data
-  childid = row[0]
+  childid = row[1]
   text = row[2]
   screenname = row[3]
   numberOfFollower = row[4]
@@ -110,7 +110,7 @@ listNumFol = []
 getParentID = getParentIDdef
 for row in results:
   #child data
-  childid = row[0]
+  childid = row[1]
   text = row[2]
   screenname = row[3]
   numberOfFollower = row[4]
@@ -154,7 +154,7 @@ listNumFol = []
 getParentID = getParentIDdef
 for row in results:
    #child data
-   childid = row[0]
+   childid = row[1]
    text = row[2]
    screenname = row[3]
    numberOfFollower = row[4]
@@ -195,9 +195,9 @@ for itwit in twit:
 
 i = 0 
 for itwit in twit:
-   i = i+1
-   if i==2000:
-   	break
+#   i = i+1
+#   if i==2000:
+#   	break
    print itwit,
    if getParentID[itwit]!=1:
       print getParentID[itwit],

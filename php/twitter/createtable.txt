@@ -1,12 +1,13 @@
 CREATE DATABASE twitter_alerts;
 
-CREATE TABLE `twitter_alerts`.`tweets` (
-`id` BIGINT UNSIGNED NOT NULL ,
-`text` VARCHAR( 150 ) NOT NULL ,
-`screen_name` VARCHAR( 255 ) NOT NULL ,
-`followers_count` INT NOT NULL ,
-`created_at` DATETIME NOT NULL ,
-PRIMARY KEY ( `id` )
-) ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS `tweets` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `userid` bigint(20) NOT NULL,
+  `text` varchar(150) NOT NULL,
+  `screen_name` varchar(255) NOT NULL,
+  `followers_count` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+)
 
 GRANT ALL PRIVILEGES ON twitter_alerts.tweets TO 'twitter_alerts'@'localhost' IDENTIFIED BY 'somepasword';

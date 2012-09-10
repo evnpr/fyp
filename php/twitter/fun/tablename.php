@@ -1,3 +1,3 @@
 <?php
-$tablename = 'tweetstest';
+$tablename = 'tweetsandroid';
 ?>

@@ -9,8 +9,7 @@
 		)
 	);
 	//We're going to store the data in the database, so, let's open a connection:
-	$db = mysql_connect('localhost', 'root', '');
-	mysql_select_db('twitter_alerts', $db);
+	include "db.php";
 
 	$context = stream_context_create($opts);
 	while (1){
